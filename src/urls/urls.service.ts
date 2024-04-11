@@ -33,7 +33,10 @@ export class UrlsService {
       type: 'png',
     };
 
-    const qrImage = await QRCode.toBuffer(createUrlDto.long, qrOptions);
+    const qrImage = await QRCode.toBuffer(
+      `${VARIABLES.BASE_URL}/${url.short}`,
+      qrOptions,
+    );
     const params = {
       Bucket: VARIABLES.S3_PUBLIC_BUCKET_NAME,
       Key: `${url.id}.png`,

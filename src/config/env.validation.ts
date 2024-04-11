@@ -24,6 +24,9 @@ export class Environments {
 
   @IsString()
   S3_PUBLIC_BUCKET_NAME: string;
+
+  @IsString()
+  BASE_URL: string;
 }
 
 export function validate(config: Record<string, unknown>) {

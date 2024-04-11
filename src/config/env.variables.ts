@@ -20,6 +20,7 @@ export const VARIABLES = {
   ENV: configService.get('NODE_ENV', { infer: true }),
   IS_DEVELOPMENT: isDevelopment,
   IS_LOCAL: isLocal,
+  BASE_URL: configService.get('BASE_URL', { infer: true }),
   S3_PUBLIC_BUCKET_NAME : configService.get('S3_PUBLIC_BUCKET_NAME', { infer: true }),
   DYNAMO_DB_ENDPOINT: isLocal ? configService.get('DYNAMO_DB_ENDPOINT', { infer: true }) : undefined,
   AWS_DEFAULT_SERVICE_OPTIONS: isLocal ? {
