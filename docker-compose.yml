@@ -1,0 +1,36 @@
+version: '3'
+services:
+  dynamodb:
+    image: 'amazon/dynamodb-local:latest'
+    container_name: 'dynamodb'
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/
+    volumes:
+      - ${PWD}/data/dynamodb:/home/dynamodblocal/data
+    ports:
+      - '8008:8000'
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.2
+
+  url-shortener:
+    image: 'minaroid/url-shortener'
+    container_name: 'url-shortener'
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      DYNAMO_DB_ENDPOINT: "http://10.5.0.2:8000"  
+    ports:
+      - '3000:3000'
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.3
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
